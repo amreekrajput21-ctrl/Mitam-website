@@ -1,77 +1,161 @@
-@media(max-width:768px){
-.hero h1{font-size:30px;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitam's Super Market</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+}
+
+/* HEADER */
+header{
+background:#0a7f3f;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+/* NAV */
+nav{
+background:#055c2c;
+text-align:center;
+padding:12px;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* HERO (NO IMAGE) */
+.hero{
+background:linear-gradient(135deg,#0a7f3f,#055c2c);
+height:250px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+}
+
+.hero h2{
+font-size:28px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+/* BUTTON */
+.btn{
+background:#25D366;
+padding:12px 25px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+margin-top:15px;
+display:inline-block;
+}
+
+/* PRODUCTS GRID */
+.products{
+padding:25px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+.card h3{
+margin-bottom:5px;
+}
+
+/* FOOTER */
+footer{
+background:#055c2c;
+color:white;
+text-align:center;
+padding:12px;
 }
 </style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<header>
+<h1>Mitam's Super Market</h1>
+<p>📍 Ramban | 📞 +91 90863 93011</p>
+</header>
+
 <nav>
-<div class="logo">Mitam Supermarket</div>
-<div>
 <a href="#">Home</a>
-<a href="#products">Products</a>
-<a href="#contact">Contact</a>
-</div>
+<a href="#">Products</a>
+<a href="#">Contact</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-<h1>Premium Supermarket Experience</h1>
+<h2>Premium Supermarket Experience</h2>
 <p>Best Quality • Best Price • Fast Service</p>
 
-<a class="btn" href="https://wa.me/919086393011?text=Hello%20I%20want%20to%20order%20products">
+<a class="btn" href="https://wa.me/919086393011">
 🛒 Order on WhatsApp
 </a>
 </section>
 
 <!-- PRODUCTS -->
-<section class="section" id="products">
-<h2>Our Products</h2>
-
-<div class="cards">
+<section class="products">
+<div class="grid">
 
 <div class="card">
-<h3>Groceries</h3>
-<p>Daily essential items at best price</p>
-<a class="btn" href="https://wa.me/919086393011?text=I%20want%20Groceries">Order</a>
+<h3>🛒 Groceries</h3>
+<p>Daily essentials</p>
+<a class="btn" href="https://wa.me/919086393011?text=Order%20Groceries">Order</a>
 </div>
 
 <div class="card">
-<h3>Snacks</h3>
-<p>Biscuits, Namkeen & more</p>
-<a class="btn" href="https://wa.me/919086393011?text=I%20want%20Snacks">Order</a>
+<h3>🍟 Snacks</h3>
+<p>Chips & Namkeen</p>
+<a class="btn" href="https://wa.me/919086393011?text=Order%20Snacks">Order</a>
 </div>
 
 <div class="card">
-<h3>Cold Drinks</h3>
-<p>All beverages available</p>
-<a class="btn" href="https://wa.me/919086393011?text=I%20want%20Cold%20Drinks">Order</a>
+<h3>🥤 Cold Drinks</h3>
+<p>All beverages</p>
+<a class="btn" href="https://wa.me/919086393011?text=Order%20Cold%20Drinks">Order</a>
 </div>
 
 <div class="card">
-<h3>Dry Fruits</h3>
-<p>Kaju, Badam & premium quality</p>
-<a class="btn" href="https://wa.me/919086393011?text=I%20want%20Dry%20Fruits">Order</a>
+<h3>🥜 Dry Fruits</h3>
+<p>Kaju, Badam</p>
+<a class="btn" href="https://wa.me/919086393011?text=Order%20Dry%20Fruits">Order</a>
 </div>
 
 </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-<h2>Contact Us</h2>
-<p>📍 Ramban, Jammu & Kashmir</p>
-<p>📞 +91 90863 93011</p>
-
-<a class="btn" href="https://wa.me/919086393011?text=Hello%20I%20want%20to%20contact%20you">
-Chat on WhatsApp
-</a>
-</section>
-
-<!-- FLOAT BUTTON -->
-<a class="whatsapp" href="https://wa.me/919086393011">💬</a>
+<footer>
+<p>© Mitam's Super Market | Ramban</p>
+</footer>
 
 </body>
 </html>

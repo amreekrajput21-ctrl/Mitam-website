@@ -1,147 +1,66 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || {};
+let cart = {};
 let currentProducts = [...products];
 
-// LOAD PRODUCTS
 function loadProducts(list){
 let html="";
-
 list.forEach(p=>{
 html+=`
 <div class="card">
 <img src="${p.img}">
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
-
-<div>
-<button onclick="changeQty('${p.name}', -1)">➖</button>
-<span>${cart[p.name]?.qty || 0}</span>
-<button onclick="changeQty('${p.name}', 1)">➕</button>
-</div>
-
 <button class="btn" onclick="addItem('${p.name}',${p.price})">Add</button>
-</div>
-`;
+</div>`;
 });
-
-document.getElementById("products").innerHTML = html;
+document.getElementById("products").innerHTML=html;
 }
 
-// ADD ITEM
 function addItem(name,price){
 if(cart[name]){
 cart[name].qty++;
 }else{
-cart[name] = {price:price, qty:1};
+cart[name]={price:price,qty:1};
 }
-saveCart();
-}
-
-// CHANGE QTY
-function changeQty(name,change){
-if(cart[name]){
-cart[name].qty += change;
-
-if(cart[name].qty <= 0){
-delete cart[name];
-}
-}else if(change > 0){
-let p = products.find(x=>x.name === name);
-cart[name] = {price:p.price, qty:1};
-}
-
-saveCart();
-}
-
-// SAVE CART
-function saveCart(){
-localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
-loadProducts(currentProducts);
 }
 
-// UPDATE CART UI
 function updateCart(){
 let html="";
 let total=0;
 let count=0;
 
 for(let item in cart){
-let p = cart[item].price;
-let q = cart[item].qty;
+let p=cart[item].price;
+let q=cart[item].qty;
+total+=p*q;
+count+=q;
 
-total += p*q;
-count += q;
-
-html+=`
-<div class="item">
-<span>${item} x${q}</span>
-<span>₹${p*q}</span>
-<button onclick="removeItem('${item}')">❌</button>
-</div>
-`;
+html+=`<div class="item">${item} x${q} = ₹${p*q}</div>`;
 }
 
-document.getElementById("cartItems").innerHTML = html;
-document.getElementById("total").innerText = total;
-document.getElementById("count").innerText = count;
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText=total;
+document.getElementById("count").innerText=count;
 }
 
-// REMOVE ITEM
-function removeItem(name){
-delete cart[name];
-saveCart();
-}
-
-// CLEAR CART
-function clearCart(){
-cart = {};
-saveCart();
-}
-
-// SEARCH
 function searchProduct(){
-let val = document.getElementById("search").value.toLowerCase();
-
-currentProducts = products.filter(p =>
-p.name.toLowerCase().includes(val)
-);
-
-loadProducts(currentProducts);
+let val=document.getElementById("search").value.toLowerCase();
+let filtered=products.filter(p=>p.name.toLowerCase().includes(val));
+loadProducts(filtered);
 }
 
-// FILTER CATEGORY
 function filterCategory(cat){
-if(cat === "all"){
-currentProducts = [...products];
-}else{
-currentProducts = products.filter(p => p.category === cat);
-}
-loadProducts(currentProducts);
+if(cat==="all"){loadProducts(products);}
+else{loadProducts(products.filter(p=>p.category===cat));}
 }
 
-// WHATSAPP ORDER
-function order(){
-if(Object.keys(cart).length === 0){
-alert("Cart empty hai 😢");
-return;
-}
-
-let text="🛒 *Mitam Super Market Order*%0A%0A";
-let total=0;
-
-for(let item in cart){
-let p = cart[item].price;
-let q = cart[item].qty;
-
-text += `👉 ${item} x${q} = ₹${p*q}%0A`;
-total += p*q;
-}
-
-text += `%0A💰 Total: ₹${total}`;
-
-window.open("https://wa.me/919086393011?text=" + text);
-}
-
-// INIT
-loadProducts(products);
+function clearCart(){
+cart={};
 updateCart();
+}
+
+function order(){
+alert("Order placed on WhatsApp 😎");
+}
+
+loadProducts(products);

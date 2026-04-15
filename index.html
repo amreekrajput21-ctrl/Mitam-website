@@ -151,4 +151,157 @@ window.open("https://wa.me/919086393011?text="+encodeURIComponent(text));
 </script>
 
 </body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mitam Super Market</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f1f3f6;}
+
+header{
+background:#2874f0;
+color:white;
+padding:15px;
+text-align:center;
+font-size:22px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:10px;
+}
+
+.card{
+background:white;
+padding:10px;
+border-radius:10px;
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.btn{
+background:#fb641b;
+color:white;
+padding:8px;
+border:none;
+border-radius:5px;
+margin-top:5px;
+}
+
+.cart{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:white;
+padding:10px;
+box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin:5px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>Mitam Super Market</header>
+
+<div class="products">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1617196034183-421b4917c92d">
+<h3>Lays Chips</h3>
+<p>₹20</p>
+<button class="btn" onclick="addItem('Lays Chips',20)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b">
+<h3>Coca Cola</h3>
+<p>₹40</p>
+<button class="btn" onclick="addItem('Coca Cola',40)">Add</button>
+</div>
+
+</div>
+
+<div class="cart" id="cart">
+<h3>Cart</h3>
+<div id="cartItems"></div>
+<p>Total: ₹<span id="total">0</span></p>
+<button class="btn" onclick="order()">Order on WhatsApp</button>
+</div>
+
+<script>
+
+let cart={};
+
+function addItem(name,price){
+if(cart[name]){
+cart[name].qty++;
+}else{
+cart[name]={price:price,qty:1};
+}
+updateCart();
+}
+
+function updateCart(){
+let html="";
+let total=0;
+
+for(let item in cart){
+let p=cart[item].price;
+let q=cart[item].qty;
+total+=p*q;
+
+html+=`
+<div class="item">
+<span>${item} x${q}</span>
+<span>₹${p*q}</span>
+<button onclick="removeItem('${item}')">❌</button>
+</div>`;
+}
+
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText=total;
+}
+
+function removeItem(name){
+delete cart[name];
+updateCart();
+}
+
+function order(){
+let text="Order:\n";
+let total=0;
+
+for(let item in cart){
+let p=cart[item].price;
+let q=cart[item].qty;
+text+=item+" x"+q+" = ₹"+(p*q)+"\n";
+total+=p*q;
+}
+
+text+="Total: ₹"+total;
+
+window.open("https://wa.me/919086393011?text="+encodeURIComponent(text));
+}
+
+</script>
+
+</body>
 </html>

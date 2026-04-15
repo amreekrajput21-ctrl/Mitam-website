@@ -1,143 +1,44 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || {};
-let currentProducts = [...products];
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitam Super Market</title>
 
-// LOAD PRODUCTS
-function loadProducts(list){
-let html="";
-list.forEach(p=>{
-html+=`
-<div class="card">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p>₹${p.price}</p>
+<link rel="stylesheet" href="style.css">
+</head>
 
-<div>
-<button onclick="changeQty('${p.name}', -1)">➖</button>
-<span id="qty-${p.name}">${cart[p.name]?.qty || 0}</span>
-<button onclick="changeQty('${p.name}', 1)">➕</button>
+<body>
+
+<header>
+<h2>🛒 Mitam Super Market</h2>
+
+<input type="text" id="search" placeholder="Search product..." onkeyup="searchProduct()">
+</header>
+
+<div class="filters">
+<button onclick="filterCategory('all')">All</button>
+<button onclick="filterCategory('snacks')">Snacks</button>
+<button onclick="filterCategory('drinks')">Drinks</button>
+<button onclick="filterCategory('grocery')">Grocery</button>
 </div>
 
-<button class="btn" onclick="addItem('${p.name}',${p.price})">Add</button>
-</div>`;
-});
-document.getElementById("products").innerHTML=html;
-}
+<!-- PRODUCTS -->
+<div class="products" id="products"></div>
 
-// ADD ITEM
-function addItem(name,price){
-if(cart[name]){
-cart[name].qty++;
-}else{
-cart[name]={price:price,qty:1};
-}
-saveCart();
-}
+<!-- CART -->
+<div class="cart">
+<h3>Cart (<span id="count">0</span>)</h3>
+<div id="cartItems"></div>
+<p>Total: ₹<span id="total">0</span></p>
 
-// CHANGE QTY
-function changeQty(name,change){
-if(cart[name]){
-cart[name].qty += change;
+<button onclick="order()">Order on WhatsApp</button>
+<button onclick="clearCart()">Clear Cart</button>
+</div>
 
-if(cart[name].qty <= 0){
-delete cart[name];
-}
-}else if(change > 0){
-let p = products.find(x=>x.name===name);
-cart[name] = {price:p.price, qty:1};
-}
+<!-- JS FILES (VERY IMPORTANT 🔥) -->
+<script src="products.js"></script>
+<script src="script.js"></script>
 
-saveCart();
-}
-
-// SAVE + UPDATE
-function saveCart(){
-localStorage.setItem("cart", JSON.stringify(cart));
-updateCart();
-loadProducts(currentProducts);
-}
-
-// UPDATE CART UI
-function updateCart(){
-let html="";
-let total=0;
-let count=0;
-
-for(let item in cart){
-let p=cart[item].price;
-let q=cart[item].qty;
-
-total += p*q;
-count += q;
-
-html+=`
-<div class="item">
-<span>${item} x${q}</span>
-<span>₹${p*q}</span>
-<button onclick="removeItem('${item}')">❌</button>
-</div>`;
-}
-
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerText=total;
-document.getElementById("count").innerText=count;
-}
-
-// REMOVE ITEM
-function removeItem(name){
-delete cart[name];
-saveCart();
-}
-
-// CLEAR CART
-function clearCart(){
-cart = {};
-saveCart();
-}
-
-// SEARCH
-function searchProduct(){
-let val = document.getElementById("search").value.toLowerCase();
-
-currentProducts = products.filter(p =>
-p.name.toLowerCase().includes(val)
-);
-
-loadProducts(currentProducts);
-}
-
-// FILTER
-function filterCategory(cat){
-if(cat==="all"){
-currentProducts = [...products];
-}else{
-currentProducts = products.filter(p=>p.category===cat);
-}
-loadProducts(currentProducts);
-}
-
-// WHATSAPP ORDER
-function order(){
-if(Object.keys(cart).length === 0){
-alert("Cart empty hai 😢");
-return;
-}
-
-let text="🛒 *Mitam Super Market Order*%0A%0A";
-let total=0;
-
-for(let item in cart){
-let p=cart[item].price;
-let q=cart[item].qty;
-
-text+=`👉 ${item} x${q} = ₹${p*q}%0A`;
-total+=p*q;
-}
-
-text+=`%0A💰 Total: ₹${total}`;
-
-window.open("https://wa.me/919086393011?text="+text);
-}
-
-// INIT
-loadProducts(products);
-updateCart();
+</body>
+</html>
